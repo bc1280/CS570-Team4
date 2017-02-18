@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fitchburg Library Room Reservation</title>
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="css/jquery-ui.theme.min.css" rel="stylesheet" />
+    <style>
+      #feedback { font-size: 1.4em; }
+      #selectable .ui-selecting { background: #b8de8f; }
+      #selectable .ui-selected { background: #6eac2c; color: white; }
+      #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+      #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+    </style>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/jquery-ui.min.js"></script>
+    <script src="scripts/handlebars.min.js"></script>
+    <script src="scripts/handlebarsManager.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            InitPage();
+        });
+
+        function InitPage(){
+            //$("#main").html(hbMan.getTemplate("hb_systemAlert")({ title: "brrr" }));
+            $( "#selectable" ).selectable();
+            $( "#datepicker" ).datepicker();
+        }
+    </script>
+    
+</head>
+<body>
+<h1>Hello!</h1>
+<div id="main">
+     <div id="datepicker"></div>
+ <div>
+<ol id="selectable">
+  <li class="ui-widget-content">Item 1</li>
+  <li class="ui-widget-content">Item 2</li>
+  <li class="ui-widget-content">Item 3</li>
+  <li class="ui-widget-content">Item 4</li>
+  <li class="ui-widget-content">Item 5</li>
+  <li class="ui-widget-content">Item 6</li>
+  <li class="ui-widget-content">Item 7</li>
+</ol>
+
+</div>
+<script id="hb_systemAlert" type="text/x-handlebars_template">
+        <div id="sa_{{id}}" class="ui-widget hidden">
+            <div class="ui-state-{{state}} ui-corner-all">
+                <p><span class="ui-icon ui-icon-{{icon}}"></span>
+                <strong>{{title}}</strong> {{message}} </p>
+            </div>
+        </div>
+    </script>
+</body>
+</html>
