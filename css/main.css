@@ -247,3 +247,10 @@ header h1{
     margin-right: auto;
 }
 
+/* Calendar UI */
+.this-week a.ui-state-default:not(.ui-state-highlight):not(.ui-state-active)
+{
+  background: #ece8da url("images/ui-bg_gloss-wave_100_ece8da_500x100.png") 50% 50% repeat-x;
+  color: black;
+  
+}
