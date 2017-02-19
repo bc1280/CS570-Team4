@@ -1,40 +1,50 @@
 ﻿body {
 }
 
-
-#rooms div { width: 200px; float: left; border: 1px solid #bed9ed66; padding: 3px; text-align: center;}
-      #rooms .selectable li { cursor: pointer; }
-      #rooms .selectable li.unselectable {
-        cursor: not-allowed;
-        -webkit-touch-callout: none; /* iOS Safari */
-          -webkit-user-select: none; /* Safari */
-           -khtml-user-select: none; /* Konqueror HTML */
-             -moz-user-select: none; /* Firefox */
-              -ms-user-select: none; /* Internet Explorer/Edge */
-                  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-        box-shadow: inset 1px 1px 1px black,
-              inset 2px 2px 8px rgba(0,0,0,0.3),
-              inset -2px -3px 5px rgba(255,255,255,0.5);
-      }
-      #rooms .selectable li.ui-selecting { background: #b8de8f; }
-      #rooms .selectable li.ui-selected { background: #6eac2c; color: white; }
-      #rooms ul { list-style-type: none; margin: 0; padding: 0; }
-      #rooms ul li { margin: 1px; padding-left: 0.4em; font-size: .8em; border:1px solid #a6c9e2; color: #222; background-color: #fcfdfd; }
-      #rooms li.beforeOpen, .beforeOpen {background-color: #ffffcc;}
-      #rooms li.afterClose, .afterClose {background-color: #ffe2cc;}
-      .button { margin-left: 50px; }
-      #timeList {
-        cursor: default;
-        -webkit-touch-callout: none; /* iOS Safari */
-          -webkit-user-select: none; /* Safari */
-           -khtml-user-select: none; /* Konqueror HTML */
-             -moz-user-select: none; /* Firefox */
-              -ms-user-select: none; /* Internet Explorer/Edge */
-                  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-      }
-      #key {padding: 25px; display: none;}
-      #key div{margin-top: 30px; padding: 15px; font-weight: bold; border:1px solid #a6c9e2; color: #222;}
-      #key div.emphasize {  box-shadow: 5px 5px 5px rgba(0,0,0,0.7); border: 5px double #1c97ef;}
+div#rooms {margin-top: 10px;}
+#rooms > div { width: 200px; float: left; background-color: #e2eff3; border: 1px solid #bed9edcc; padding: 3px; text-align: center;}
+#rooms .selectable li { cursor: pointer; }
+#rooms .selectable li.unselectable {
+cursor: not-allowed;
+-webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+box-shadow: inset 1px 1px 1px black,
+      inset 2px 2px 8px rgba(0,0,0,0.3),
+      inset -2px -3px 5px rgba(255,255,255,0.5);
+}
+#rooms .selectable li.ui-selecting { background: #b8de8f; }
+#rooms .selectable li.ui-selected, div.selected { background: #6eac2c; color: white; }
+#rooms ul { list-style-type: none; margin: 0; padding: 0; }
+#rooms ul li { margin: 1px; padding-left: 0.4em; font-size: .8em; border:1px solid #a6c9e2; color: #222; background-color: #fcfdfd; }
+#rooms li.beforeOpen, .beforeOpen {background-color: #ffffcc;}
+#rooms li.afterClose, .afterClose {background-color: #ffe2cc;}
+.button { margin-left: 50px; }
+#timeList {
+cursor: default;
+-webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+#key {padding: 25px; display: none;}
+#key div{margin-top: 30px; padding: 15px; font-weight: bold; border:1px solid #a6c9e2; color: #222;}
+#key div.emphasize {  box-shadow: 5px 5px 5px rgba(0,0,0,0.7); border: 5px double #1c97ef;}
+#note {
+display: none; 
+color: #000;
+font-weight: bold;
+background-color: #e6a013; /* fallback color if gradients are not supported */
+  background-image: -webkit-linear-gradient(top, #f2f5c5, #e6a013); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image:    -moz-linear-gradient(top, #f2f5c5, #e6a013); /* For Firefox (3.6 to 15) */
+  background-image:      -o-linear-gradient(top, #f2f5c5, #e6a013); /* For old Opera (11.1 to 12.0) */ 
+  background-image:         linear-gradient(to bottom, #f2f5c5, #e6a013); /* Standard syntax; must be last */
+}
 
 /* utilities
 ----------------------------------------------------------*/
