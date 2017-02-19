@@ -26,7 +26,7 @@ function InitPage(){
     filter: "li:not(.unselectable)",
     cancel: "li.unselectable",
     start: function(){
-      $(".ui-selected").removeClass("ui-selected");
+      //$(".ui-selected").removeClass("ui-selected");
     },
     stop: function(){
       SelectTime();
@@ -43,6 +43,30 @@ function InitPage(){
       } else {
           prev = curr;
       }
+      
+      var roomType = ui.selecting.id.substring(0, 1);
+      var maxIndex;
+      var minIndex;
+      
+      $(".ui-selected").each(function() {
+        // Remove selections from the other room
+        if (this.id.substring(0, 1) != roomType) {
+          $(this).removeClass("ui-selected");
+        }
+        // Find the minimum and maximum index of selections within the room
+        else {
+          var index = parseInt(this.id.substring(3));
+          console.log(index);
+          if (maxIndex < index) {
+            maxIndex = index;
+          }
+          if (minIndex > index) {
+            minIndex = index;
+          }
+        }
+        
+        //console.log(minIndex + " " + maxIndex);
+      })
     }
   });
   $( "#datepicker" ).datepicker({
@@ -173,11 +197,17 @@ function SelectTime(){
   $("#selectedSlot").html("");
   $(".emphasize").removeClass("emphasize");
   $("div.selected").removeClass("selected");
-  if(cClosed > 0 && cOpen == 0){
+  
+  // If the last element is unselected
+  if (selectedTimes.length === 0)
+  {
+    $("#continue").hide();
+  }
+  else if (cClosed > 0 && cOpen == 0) {
     $(".ui-selected").removeClass("ui-selected");
     $("#key div.afterClose").addClass("emphasize");
     $("#continue").hide();
-  }else{
+  } else {
     var i = selectedTimes.length - 1;
     var sTime = "Selected time slot: " + selectedTimes[0].startTime + " - " + selectedTimes[i].endTime;
     $("#selectedSlot").html(sTime);
