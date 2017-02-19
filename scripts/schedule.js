@@ -92,7 +92,7 @@ function GetLI(label, c, thisWeek, i){
   if(label.toLowerCase() === "open"){
     if(thisWeek){
       props += " style='box-shadow: unset;'";
-      label = "please call to reserve";
+      label = "Please call to reserve";
       cl += "please-call"
     }
     else
@@ -173,7 +173,7 @@ function SelectTime(){
   $("div.selected").removeClass("selected");
   if(cClosed > 0 && cOpen == 0){
     $(".ui-selected").removeClass("ui-selected");
-    $("#key div.afterClose").effect("shake",1000).addClass("emphasize");
+    $("#key div.afterClose").addClass("emphasize");
     $("#continue").hide();
   }else{
     var i = selectedTimes.length - 1;
@@ -182,7 +182,7 @@ function SelectTime(){
     $("#continue").show();
     $("#rooms > div:has(li.ui-selected)").find("div.room").addClass("selected");
     if(cEarly > 0)
-      $("#key div.beforeOpen").effect("pulsate",1000).addClass("emphasize");
+      $("#key div.beforeOpen").addClass("emphasize");
   }
 }
 
