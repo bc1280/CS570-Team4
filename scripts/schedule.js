@@ -45,8 +45,8 @@ function InitPage(){
       }
       
       var roomType = ui.selecting.id.substring(0, 1);
-      var maxIndex;
-      var minIndex;
+      var maxIndex = -1;
+      var minIndex = 999;
       
       $(".ui-selected").each(function() {
         // Remove selections from the other room
@@ -56,7 +56,6 @@ function InitPage(){
         // Find the minimum and maximum index of selections within the room
         else {
           var index = parseInt(this.id.substring(3));
-          console.log(index);
           if (maxIndex < index) {
             maxIndex = index;
           }
@@ -64,9 +63,12 @@ function InitPage(){
             minIndex = index;
           }
         }
-        
-        //console.log(minIndex + " " + maxIndex);
       })
+      
+      // If the existing selection is too far from the current, clear it
+      if ((minIndex > curr + 1) || (maxIndex < curr - 1) ) {
+        $(".ui-selected").removeClass("ui-selected");
+      }
     }
   });
   $( "#datepicker" ).datepicker({
