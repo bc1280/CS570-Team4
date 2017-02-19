@@ -1,5 +1,41 @@
 ﻿body {
 }
+
+
+#rooms div { width: 200px; float: left; border: 1px solid #bed9ed66; padding: 3px; text-align: center;}
+      #rooms .selectable li { cursor: pointer; }
+      #rooms .selectable li.unselectable {
+        cursor: not-allowed;
+        -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+           -khtml-user-select: none; /* Konqueror HTML */
+             -moz-user-select: none; /* Firefox */
+              -ms-user-select: none; /* Internet Explorer/Edge */
+                  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+        box-shadow: inset 1px 1px 1px black,
+              inset 2px 2px 8px rgba(0,0,0,0.3),
+              inset -2px -3px 5px rgba(255,255,255,0.5);
+      }
+      #rooms .selectable li.ui-selecting { background: #b8de8f; }
+      #rooms .selectable li.ui-selected { background: #6eac2c; color: white; }
+      #rooms ul { list-style-type: none; margin: 0; padding: 0; }
+      #rooms ul li { margin: 1px; padding-left: 0.4em; font-size: .8em; border:1px solid #a6c9e2; color: #222; background-color: #fcfdfd; }
+      #rooms li.beforeOpen, .beforeOpen {background-color: #ffffcc;}
+      #rooms li.afterClose, .afterClose {background-color: #ffe2cc;}
+      .button { margin-left: 50px; }
+      #timeList {
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+           -khtml-user-select: none; /* Konqueror HTML */
+             -moz-user-select: none; /* Firefox */
+              -ms-user-select: none; /* Internet Explorer/Edge */
+                  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+      }
+      #key {padding: 25px; display: none;}
+      #key div{margin-top: 30px; padding: 15px; font-weight: bold; border:1px solid #a6c9e2; color: #222;}
+      #key div.emphasize {  box-shadow: 5px 5px 5px rgba(0,0,0,0.7); border: 5px double #1c97ef;}
+
 /* utilities
 ----------------------------------------------------------*/
 
@@ -165,74 +201,3 @@ header h1{
     margin-right: auto;
 }
 
-#topLists{
-    font-size: .8em;
-}
-
-#topLists .ui-helper-clearfix div{
-    float:left;
-}
-
-#topLists ul{
-    list-style:none;
-}
-
-#criteria label{
-    width: 200px;
-    text-align:left;
-}
-
-#lists a:not(first-child){
-    margin-left: 15px;
-}
-
-#results table{
-    width: 100%;
-
-}
-
-#results table button, #viewed table button{
-    font-size: .7em;
-    float:right;
-}
-
-#controls button{
-    margin-left: 15px;
-}
-
-.out div{
-    float:left;
-    margin-left: 100px;
-    vertical-align: top;
-}
-
-#viewed tr.ui-selected { background: #F39814; color: white; }
-
-#details .nUL li{
-    float: left; 
-    margin-left: 15px;
-}
-
-#details td:nth-child(even){
-    border: 1px solid black;
-    padding: 5px;
-}
-#details td:nth-child(odd), #searchDetails td:nth-child(odd){
-    text-align:right;
-    font-weight:bold;
-}
-
-#ratingDialog div.clear-fix{
-    background-color:rgba(232, 232, 232, 1);
-    color: #000;
-    padding: 15px;
-}
-
-.sliders li
-{
-    padding: 5px;
-}
-
-.slider{
-    margin-top: 5px;
-}

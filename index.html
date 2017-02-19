@@ -7,45 +7,37 @@
     <link href="css/main.css" rel="stylesheet" />
     <link href="css/jquery-ui.min.css" rel="stylesheet" />
     <link href="css/jquery-ui.theme.min.css" rel="stylesheet" />
-    <style>
-      #rooms div { width: 200px; float: left; border: 1px solid #bed9ed66; padding: 3px; text-align: center;}
-      #rooms .selectable li.ui-selecting { background: #b8de8f; }
-      #rooms .selectable li.ui-selected { background: #6eac2c; color: white; }
-      #rooms ul { list-style-type: none; margin: 0; padding: 0; }
-      #rooms ul li { margin: 1px; padding-left: 0.4em; font-size: .8em; border:1px solid #a6c9e2; color: #222; background-color: #fcfdfd; }
-      #rooms li.beforeOpen, .beforeOpen {background-color: #ffffcc;}
-      #rooms li.afterClose, .afterClose {background-color: #ffe2cc;}
-      .button { margin-left: 50px; }
-      #timeList {
-        -webkit-touch-callout: none; /* iOS Safari */
-          -webkit-user-select: none; /* Safari */
-           -khtml-user-select: none; /* Konqueror HTML */
-             -moz-user-select: none; /* Firefox */
-              -ms-user-select: none; /* Internet Explorer/Edge */
-                  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-      }
-      #key {padding: 25px; display: none;}
-      #key div{margin-top: 30px; padding: 15px; font-weight: bold; border:1px solid #a6c9e2; color: #222;}
-    </style>
     <script src="scripts/jquery.js"></script>
     <script src="scripts/jquery-ui.min.js"></script>
-    <script src="scripts/handlebars.min.js"></script>
-    <script src="scripts/handlebarsManager.js"></script>
     <script type="text/javascript">
         $(function () {
             InitPage();
+ 
         });
-
-
 
         function InitPage(){
             //$("#main").html(hbMan.getTemplate("hb_systemAlert")({ title: "brrr" }));
             $( ".selectable" ).selectable({
+              filter: "li:not(.unselectable)",
+              cancel: "li.unselectable",
               start: function(){
                 $(".ui-selected").removeClass("ui-selected");
               },
               stop: function(){
                 SelectTime();
+                prev = -1;
+              },
+              selecting: function(e, ui) {
+                var curr = $(ui.selecting.tagName, e.target).index(ui.selecting);
+                if(prev > -1 && Math.abs(curr - prev) > 1){
+                      e.stopImmediatePropagation();
+                      e.stopPropagation();
+                      e.preventDefault();
+                      $(ui.selecting).removeClass("ui-selecting");
+                      return false;
+                } else {
+                    prev = curr;
+                }
               }
             });
             $( "#datepicker" ).datepicker({
@@ -62,6 +54,7 @@
             });
         }
 
+        var prev = -1;
         var availableTimes = [];
         var daysOfWeek = ["sundays","mondays","tuesdays","wednesdays","thursdays","fridays","saturdays"];
 
@@ -70,6 +63,7 @@
           $("#key").show();
           var sDate = new Date(dateText);
           var day = sDate.getDay();
+          var dayMod = day%2;
           var lists = [$("#timeList"),$("#room1"),$("#room2")];
           availableTimes = [];
           var openTime = "";
@@ -91,8 +85,8 @@
 
               var tm = t.startTime + " - " + t.endTime;
               lists[0].append(GetLI(tm, c));
-              lists[1].append(GetLI(t.status1, c, "cr_" + x));
-              lists[2].append(GetLI(t.status2, c, "mr_" + x));
+              lists[1].append(GetLI(t.cr[dayMod], c, "cr_" + x));
+              lists[2].append(GetLI(t.mr[dayMod], c, "mr_" + x));
               availableTimes.push(t);
               x++;
             }
@@ -100,6 +94,8 @@
 
           $("#key div.afterClose").html("Reservations can not start after the library closes at " + closingTime + " on " + daysOfWeek[day]);
           $("#key div.beforeOpen").html("For reservations starting before the library opens at " + openTime + ", you must call in advance to gain access to the building");
+
+
         }
 
         function SelectTime(){
@@ -107,26 +103,35 @@
           var selectedType = "";
           var cOpen = 0;
           var cClosed = 0;
+          var cEarly = 0;
           $(".ui-selected").each(function(){
             var tmp = this.id.split("_");
             selectedType = tmp[0];
             selectedTimes.push(availableTimes[tmp[1]]);
             if($(this).hasClass("afterClose"))
               cClosed++;
-            else
+            else{
               cOpen++;
+              if($(this).hasClass("beforeOpen"))
+                cEarly++;
+            }
           });
 
+          $(".emphasize").removeClass("emphasize");
           if(cClosed > 0 && cOpen == 0){
             $(".ui-selected").removeClass("ui-selected");
-            $("#key div.afterClose").effect("pulsate",2000);
+            $("#key div.afterClose").effect("shake",1000).addClass("emphasize");
             $("#continue").hide();
-          }else
+          }else{
             $("#continue").show();
+            if(cEarly > 0)
+              $("#key div.beforeOpen").effect("pulsate",1000).addClass("emphasize");
+          }
         }
 
         function GetLI(label, c, i){
-          return "<li id='" + i + "' class='" + c + "'>" + label +"</li>";
+          var cl = (label.toLowerCase() !== "open" ? "unselectable " : "") + c;
+          return "<li id='" + i + "' class='" + cl + "'>" + label +"</li>";
         }
     </script>
     
@@ -137,8 +142,8 @@
   <div style="float: left; width: 305px; padding: 5px;">
      <div id="datepicker"></div>
      <div id="key">
-     <div class="beforeOpen">rerere</div>
-     <div class="afterClose">hfhfhfh</div>
+     <div class="beforeOpen"></div>
+     <div class="afterClose"></div>
      </div>
    </div>
    <div style="float: left; min-width: 600px; width: 65%; padding: 5px;">
@@ -162,23 +167,45 @@
       
      </div>  
 
-
-
 </div>
 <div id="confirmation" class="hidden">
 <h1>This is where you would confirm the reservation</h1>
 <a href="index.html">return to beginning</a>
 </div>
-<script id="hb_systemAlert" type="text/x-handlebars_template">
-        <div id="sa_{{id}}" class="ui-widget hidden">
-            <div class="ui-state-{{state}} ui-corner-all">
-                <p><span class="ui-icon ui-icon-{{icon}}"></span>
-                <strong>{{title}}</strong> {{message}} </p>
-            </div>
-        </div>
-    </script>
     <script  type="text/javascript">
-    var times = [{days:[1,2,3,4,5,6],startTime:"7:00 AM",endTime:"7:30 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],status1:"open",status2:"open"},{days:[1,2,3,4,5,6],startTime:"7:30 AM",endTime:"8:00 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],status1:"open",status2:"open"},{days:[1,2,3,4,5,6],startTime:"8:00 AM",endTime:"8:30 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],status1:"open",status2:"open"},{days:[1,2,3,4,5,6],startTime:"8:30 AM",endTime:"9:00 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"9:00 AM",endTime:"9:30 AM",beforeOpen:[0,5,6],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"9:30 AM",endTime:"10:00 AM",beforeOpen:[0,5,6],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"10:00 AM",endTime:"10:30 AM",beforeOpen:[0],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"10:30 AM",endTime:"11:00 AM",beforeOpen:[0],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"11:00 AM",endTime:"11:30 AM",beforeOpen:[0],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"11:30 AM",endTime:"12:00 PM",beforeOpen:[0],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"12:00 PM",endTime:"12:30 PM",beforeOpen:[0],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"12:30 PM",endTime:"1:00 PM",beforeOpen:[0],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"1:00 PM",endTime:"1:30 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"1:30 PM",endTime:"2:00 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"2:00 PM",endTime:"2:30 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"2:30 PM",endTime:"3:00 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"3:00 PM",endTime:"3:30 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"3:30 PM",endTime:"4:00 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"4:00 PM",endTime:"4:30 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"4:30 PM",endTime:"5:00 PM",beforeOpen:[],afterClose:[],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"5:00 PM",endTime:"5:30 PM",beforeOpen:[],afterClose:[0],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"5:30 PM",endTime:"6:00 PM",beforeOpen:[],afterClose:[0],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"6:00 PM",endTime:"6:30 PM",beforeOpen:[],afterClose:[0,5,6],status1:"open",status2:"open"},{days:[0,1,2,3,4,5,6],startTime:"6:30 PM",endTime:"7:00 PM",beforeOpen:[],afterClose:[0,5,6],status1:"open",status2:"open"},{days:[1,2,3,4,5,6],startTime:"7:00 PM",endTime:"7:30 PM",beforeOpen:[],afterClose:[0,5,6],status1:"open",status2:"open"},{days:[1,2,3,4,5,6],startTime:"7:30 PM",endTime:"8:00 PM",beforeOpen:[],afterClose:[0,5,6],status1:"open",status2:"open"},{days:[1,2,3,4],startTime:"8:00 PM",endTime:"8:30 PM",beforeOpen:[],afterClose:[0,5,6],status1:"open",status2:"open"},{days:[1,2,3,4],startTime:"8:30 PM",endTime:"9:00 PM",beforeOpen:[],afterClose:[0,5,6],status1:"open",status2:"open"},{days:[1,2,3,4],startTime:"9:00 PM",endTime:"9:30 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],status1:"open",status2:"open"},{days:[1,2,3,4],startTime:"9:30 PM",endTime:"10:00 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],status1:"open",status2:"open"},{days:[1,2,3,4],startTime:"10:00 PM",endTime:"10:30 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],status1:"open",status2:"open"},{days:[1,2,3,4],startTime:"10:30 PM",endTime:"11:00 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],status1:"open",status2:"open"}];
+    var times = [
+      {days:[1,2,3,4,5,6],startTime:"7:00 AM",endTime:"7:30 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[1,2,3,4,5,6],startTime:"7:30 AM",endTime:"8:00 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[1,2,3,4,5,6],startTime:"8:00 AM",endTime:"8:30 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[1,2,3,4,5,6],startTime:"8:30 AM",endTime:"9:00 AM",beforeOpen:[0,1,2,3,4,5,6],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"9:00 AM",endTime:"9:30 AM",beforeOpen:[0,5,6],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"9:30 AM",endTime:"10:00 AM",beforeOpen:[0,5,6],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"10:00 AM",endTime:"10:30 AM",beforeOpen:[0],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"10:30 AM",endTime:"11:00 AM",beforeOpen:[0],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"11:00 AM",endTime:"11:30 AM",beforeOpen:[0],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"11:30 AM",endTime:"12:00 PM",beforeOpen:[0],afterClose:[],cr:["unavailable","open"],mr:["open","unavailable"]},
+      {days:[0,1,2,3,4,5,6],startTime:"12:00 PM",endTime:"12:30 PM",beforeOpen:[0],afterClose:[],cr:["reserved","open"],mr:["open","reserved"]},
+      {days:[0,1,2,3,4,5,6],startTime:"12:30 PM",endTime:"1:00 PM",beforeOpen:[0],afterClose:[],cr:["reserved","open"],mr:["open","reserved"]},
+      {days:[0,1,2,3,4,5,6],startTime:"1:00 PM",endTime:"1:30 PM",beforeOpen:[],afterClose:[],cr:["reserved","open"],mr:["open","reserved"]},
+      {days:[0,1,2,3,4,5,6],startTime:"1:30 PM",endTime:"2:00 PM",beforeOpen:[],afterClose:[],cr:["reserved","open"],mr:["open","reserved"]},
+      {days:[0,1,2,3,4,5,6],startTime:"2:00 PM",endTime:"2:30 PM",beforeOpen:[],afterClose:[],cr:["unavailable","open"],mr:["open","unavailable"]},
+      {days:[0,1,2,3,4,5,6],startTime:"2:30 PM",endTime:"3:00 PM",beforeOpen:[],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"3:00 PM",endTime:"3:30 PM",beforeOpen:[],afterClose:[],cr:["open","open"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"3:30 PM",endTime:"4:00 PM",beforeOpen:[],afterClose:[],cr:["open","unavailable"],mr:["open","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"4:00 PM",endTime:"4:30 PM",beforeOpen:[],afterClose:[],cr:["unavailable","reserved"],mr:["unavailable","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"4:30 PM",endTime:"5:00 PM",beforeOpen:[],afterClose:[],cr:["reserved","reserved"],mr:["reserved","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"5:00 PM",endTime:"5:30 PM",beforeOpen:[],afterClose:[0],cr:["reserved","reserved"],mr:["reserved","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"5:30 PM",endTime:"6:00 PM",beforeOpen:[],afterClose:[0],cr:["unavailable","reserved"],mr:["reserved","open"]},
+      {days:[0,1,2,3,4,5,6],startTime:"6:00 PM",endTime:"6:30 PM",beforeOpen:[],afterClose:[0,5,6],cr:["reserved","reserved"],mr:["reserved","unavailable"]},
+      {days:[0,1,2,3,4,5,6],startTime:"6:30 PM",endTime:"7:00 PM",beforeOpen:[],afterClose:[0,5,6],cr:["reserved","unavailable"],mr:["reserved","reserved"]},
+      {days:[1,2,3,4,5,6],startTime:"7:00 PM",endTime:"7:30 PM",beforeOpen:[],afterClose:[0,5,6],cr:["reserved","open"],mr:["reserved","reserved"]},
+      {days:[1,2,3,4,5,6],startTime:"7:30 PM",endTime:"8:00 PM",beforeOpen:[],afterClose:[0,5,6],cr:["unavailable","open"],mr:["reserved","reserved"]},
+      {days:[1,2,3,4],startTime:"8:00 PM",endTime:"8:30 PM",beforeOpen:[],afterClose:[0,5,6],cr:["open","open"],mr:["reserved","reserved"]},
+      {days:[1,2,3,4],startTime:"8:30 PM",endTime:"9:00 PM",beforeOpen:[],afterClose:[0,5,6],cr:["open","open"],mr:["reserved","unavailable"]},
+      {days:[1,2,3,4],startTime:"9:00 PM",endTime:"9:30 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],cr:["open","open"],mr:["reserved","open"]},
+      {days:[1,2,3,4],startTime:"9:30 PM",endTime:"10:00 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],cr:["open","open"],mr:["unavailable","open"]},
+      {days:[1,2,3,4],startTime:"10:00 PM",endTime:"10:30 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],cr:["open","open"],mr:["open","open"]},
+      {days:[1,2,3,4],startTime:"10:30 PM",endTime:"11:00 PM",beforeOpen:[],afterClose:[0,1,2,3,4,5,6],cr:["open","open"],mr:["open","open"]}];
     </script>
 </body>
 </html>
