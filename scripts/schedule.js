@@ -69,6 +69,18 @@ function InitPage(){
       if ((minIndex > curr + 1) || (maxIndex < curr - 1) ) {
         $(".ui-selected").removeClass("ui-selected");
       }
+    },
+    unselecting: function(e, ui) {
+      var prevIndex;
+      var clearEverything = false;
+      $(".ui-selected").each(function() {
+        var index = parseInt(this.id.substring(3));
+        if (index > prevIndex + 1) {
+          $(this).removeClass("ui-selected");
+        } else {
+          prevIndex = index;
+        }
+      })
     }
   });
   $( "#datepicker" ).datepicker({
