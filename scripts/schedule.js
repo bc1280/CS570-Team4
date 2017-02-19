@@ -92,7 +92,7 @@ function GetLI(label, c, thisWeek, i){
   if(label.toLowerCase() === "open"){
     if(thisWeek){
       props += " style='box-shadow: unset;'";
-      label = "please call to reserve";
+      label = "Please call to reserve";
       cl += "please-call"
     }
     else
