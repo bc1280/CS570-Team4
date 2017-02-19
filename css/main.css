@@ -1,9 +1,9 @@
 ﻿body {
 }
-
+#main h1 {margin: 0px; padding: 5px 100px;}
 div#rooms {margin-top: 10px;}
 #rooms > div { width: 200px; float: left; background-color: #e2eff3; border: 1px solid #bed9edcc; padding: 3px; text-align: center;}
-#rooms .selectable li { cursor: pointer; }
+#rooms .selectable li { cursor: cell; }
 #rooms .selectable li.unselectable {
 cursor: not-allowed;
 -webkit-touch-callout: none; /* iOS Safari */
@@ -45,6 +45,54 @@ background-color: #e6a013; /* fallback color if gradients are not supported */
   background-image:      -o-linear-gradient(top, #f2f5c5, #e6a013); /* For old Opera (11.1 to 12.0) */ 
   background-image:         linear-gradient(to bottom, #f2f5c5, #e6a013); /* Standard syntax; must be last */
 }
+
+.room span.info{
+    background-color: #0078ae;
+    background-image: url("images/ui-icons_e0fdff_256x240.png");
+    border: 1px solid #77d5f7;
+    width: 16px;
+    height:  16px;
+    background-position: -16px -144px;
+    cursor: help;
+}
+
+#selectedDate{ font-size: 1.4em; font-weight: bold; }
+
+#intro{
+    background-color: #fff;
+    background: no-repeat fixed url("images/libraryHome6.jpg");
+    background-size: 1200px auto;
+    height:  650px;
+    
+}
+
+#startDemo {
+    border: 6px double #34db1b;
+    width: 150px;
+    position: absolute;
+    top: 560px;
+    left: 510px;
+    height: 80px;
+    cursor: pointer;
+    text-align: right;
+    padding: 3px;
+    color: #fff;
+}
+
+#startDemo p {
+    width: 60%;
+    margin: 0px 0px 0px auto;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        margin-left: auto;
+    background-color: #000C;
+    padding: 3px 4px 12px 3px;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+#dialog .ui-dialog-buttonpane{margin-top: 5px; padding: 1px;}
 
 /* utilities
 ----------------------------------------------------------*/
@@ -96,17 +144,7 @@ background-color: #e6a013; /* fallback color if gradients are not supported */
     margin-right: auto;
 }
 
-.darkBG
-{
-    background: url(images/ui-bg_hexagon_15_000000_12x10.png) #000000 50% 50%;
-    color: #ffffff;
-}
 
-.lightBG
-{
-    background: url(images/ui-bg_hexagon_25_000000_12x10.png) #000000 50% 50%;
-    color: #fff;
-}
 
 .bg-lt-green
 {
@@ -145,9 +183,7 @@ background-color: #e6a013; /* fallback color if gradients are not supported */
 
 ul.nUL
 {
-    list-style: none;
     margin: 0;
-    padding: 0;
 }
 
 ul.striped li:nth-child(odd)

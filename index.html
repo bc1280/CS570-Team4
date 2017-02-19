@@ -12,11 +12,28 @@
     <script type="text/javascript">
         $(function () {
             InitPage();
- 
         });
 
         function InitPage(){
-            //$("#main").html(hbMan.getTemplate("hb_systemAlert")({ title: "brrr" }));
+            $("#startDemo").on("click",function(){
+              $("#intro").remove();
+              $("#main").show();
+            });
+
+            $("#dialog").dialog({
+              autoOpen: false,
+              height: 430,
+              width: 410,
+              buttons: {
+                Close: function() {
+                  $(this).dialog( "close" );
+                }
+              },
+              close: function() {
+                $(this).find("div.f8").hide();
+              }
+
+            });
             $( ".selectable" ).selectable({
               filter: "li:not(.unselectable)",
               cancel: "li.unselectable",
@@ -51,6 +68,22 @@
             $(".button").button().hide().on("click",function(){
               $("#main").hide();
               $("#confirmation").show();
+            });
+
+            $("#rooms .room").on("click", "span.info",function(){
+              var obj = $("#dialog");
+              var dID = "#d" + this.id;
+              if(obj.dialog("isOpen")){
+                if($(dID).filter(":visible").length)
+                  obj.dialog("close");
+                else{
+                  obj.find("div.f8").hide();
+                  $(dID).show();
+                }    
+              }else{
+                obj.dialog("open");
+                $(dID).show();
+              }
             });
         }
 
@@ -90,6 +123,8 @@
 
           $("#rooms ul").html("");
           $("#selectedDate").html("Availability for: " + dateText);
+          $("#selectedSlot").html("");
+          $("div.selected").removeClass("selected");
           $("#continue").hide();
 
           var x =0;
@@ -139,6 +174,7 @@
             }
           });
 
+          $("#selectedSlot").html("");
           $(".emphasize").removeClass("emphasize");
           $("div.selected").removeClass("selected");
           if(cClosed > 0 && cOpen == 0){
@@ -146,6 +182,9 @@
             $("#key div.afterClose").effect("shake",1000).addClass("emphasize");
             $("#continue").hide();
           }else{
+            var i = selectedTimes.length - 1;
+            var sTime = "Selected time slot: " + selectedTimes[0].startTime + " - " + selectedTimes[i].endTime;
+            $("#selectedSlot").html(sTime);
             $("#continue").show();
             $("#rooms > div:has(li.ui-selected)").find("div.room").addClass("selected");
             if(cEarly > 0)
@@ -156,37 +195,73 @@
     
 </head>
 <body>
-<h1>Fitchburg Library</h1>
-<div id="main" class="clear-fix">
-  <div style="float: left; width: 305px; padding: 5px;">
-     <div id="datepicker"></div>
-     <div id="key">
-     <div class="beforeOpen"></div>
-     <div class="afterClose"></div>
-     </div>
+<div id="intro">
+<div id="startDemo"><p>Reserve a Room</p></div>
+</div>
+<div id="main" class="hidden">
+  <h1 class="ui-widget-header">Fitchburg Library Room Reservations</h1>
+  <div class="clear-fix">
+    <div style="float: left; width: 305px; padding: 5px;">
+       <div id="datepicker"></div>
+       <div class="p5 bg-lt-blue f8">*** Reservations less than a week in advance must be made directly with the library.  Please call <strong>555-1234</strong> with any questions or issues</div>
+       <div id="key">
+         <div class="beforeOpen"></div>
+         <div class="afterClose"></div>
+       </div>
    </div>
-   <div style="float: left; min-width: 600px; width: 65%; padding: 5px;">
-     <h2 id="selectedDate">Please choose a date</h2>
-     <div id="note" class="ui-state-highlight p5"><p>NOTE: When requesting a room less than a week in advance, you must call the library (555-1234) to make the reservation</p></div>
-     <div id="rooms" class="clear-fix hidden">
-       <div><div>&nbsp;<br /><strong>Times:</strong></div>
-         <ul id="timeList">
-        </ul>
+     <div style="float: left; min-width: 600px; width: 65%; padding: 5px;">
+       <span id="selectedDate">Please choose a date</span> <strong id="selectedSlot" style="margin-left: 20px;"></strong>
+       <div id="note" class="ui-state-highlight p5"><p>NOTE: When requesting a room less than a week in advance, you must call the library (555-1234) to make the reservation</p></div>
+       <div id="rooms" class="clear-fix hidden">
+         <div><div>&nbsp;<br /><strong>Times:</strong></div>
+           <ul id="timeList">
+          </ul>
+          </div>
+          <div><div class="room"><strong>Conference Room</strong> <span id="cri" class="info ui-icon ui-corner-all"></span><br />capacity: 4 - 20</div>
+          <ul id="room1" class="selectable">
+          </ul>
+          </div>
+          <div><div class="room"><strong>Meeting Room</strong> <span id="mri" class="info ui-icon ui-corner-all"></span><br />capacity: 4 - 145</div>
+          <ul id="room2" class="selectable">
+          </ul>
+          </div>
         </div>
-        <div><div class="room"><strong>Conference Room</strong> <br />capacity: 4 - 20</div>
-
-        <ul id="room1" class="selectable">
-        </ul>
+          <button id="continue" class="button">Continue</button>
+        <div id="dialog" title="Room Details">
+          <div id="dmri" class="hidden f8"><strong>Meeting Room </strong><br />Minimum Capacity: 4   Maximum Capacity: 145<br />
+            Standard Fixtures:<ul class="nUL">
+            <li>Blu-ray Player</li>
+            <li>
+            Hitachi WXGA Projector</li>
+            <li>
+            Kitchenette w/ refrigerator, sink, and microwave.</li>
+            <li>
+            Podium</li>
+            <li>
+            Shure Cardoid Gooseneck Microphone</li>
+            <li>
+            Stackable Chairs</li>
+            <li>
+            White board</li>
+            <li>
+            Wireless Microphone System w/Lavalier Mic</li></ul>
+            Standard Equipment:
+            Assisted Listening Devices - Request at Ref. Desk
+          </div>
+          <div id="dcri" class="hidden f8"><strong>Conference Room</strong><br />Minimum Capacity: 4   Maximum Capacity: 20<br />
+            Standard Fixtures:
+            <ul class="nUL">
+            <li>55" LED Monitor</li>
+            <li>Conference Chairs</li>
+            <li>Large Conference Table</li>
+            <li>Side chairs</li>
+            <li>White board</li></ul>
+            Standard Equipment:
+            Assisted Listening Devices - Request at Ref. Desk
+          </div>
         </div>
-        <div><div class="room"><strong>Meeting Room</strong> <br />capacity: 4 - 145</div>
-        <ul id="room2" class="selectable">
-        </ul>
-        </div>
-      </div>
-        <button id="continue" class="button">Continue</button>
-      
      </div>  
-
+  </div>
 </div>
 <div id="confirmation" class="hidden">
 <h1>This is where you would confirm the reservation</h1>
