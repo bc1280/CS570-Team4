@@ -270,6 +270,10 @@ header h1{
   
 }
 
+.this-week a.ui-state-default::before {
+  content: "*";
+}
+
 /* Make it look like the Fitchburg library website */
 #main {
   margin: 0 auto;
@@ -290,7 +294,7 @@ header h1{
 
 #structuralContainer2 {
   border-right: 1px solid #ece9de;
-  /* padding-right: 1em; Commenting this out so the schedule fits in 980px */
+  padding-right: 1em;
 }
 
 #structuralContainer3 {
