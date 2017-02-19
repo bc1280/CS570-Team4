@@ -1,4 +1,5 @@
 ﻿body {
+  background-color: #edeadf;
 }
 #main h1 {margin: 0px; padding: 5px 100px;}
 div#rooms {margin-top: 10px;}
@@ -253,4 +254,47 @@ header h1{
   background: #ece8da url("images/ui-bg_gloss-wave_100_ece8da_500x100.png") 50% 50% repeat-x;
   color: black;
   
+}
+
+/* Make it look like the Fitchburg library website */
+#main {
+  margin: 0 auto;
+  max-width: 980px;
+  min-width: 980px;
+}
+
+#structuralContainer1 {
+  background-color: #fff;
+  border: 0 none;
+  -webkit-box-shadow: 0 0 3px #e5e1d3;
+  -moz-box-shadow: 0 0 3px #e5e1d3;
+  box-shadow: 0 0 3px #e5e1d3;
+  margin-top: .5em;
+  margin-bottom: 1em;
+  padding: .5em .5em .5em .5em;
+}
+
+#structuralContainer2 {
+  border-right: 1px solid #ece9de;
+  /* padding-right: 1em; Commenting this out so the schedule fits in 980px */
+}
+
+#structuralContainer3 {
+  background-color: #01455e;
+  border: 0 none;
+  margin-bottom: 0;
+}
+
+.contentWrapMain {
+  float: left;
+  padding: 0;
+  margin-left: 35%;
+  width: 65%;
+}
+
+.sidebar {
+  float: left;
+  padding: 0 0;
+  width: 33%;
+  margin-left: -100%;
 }

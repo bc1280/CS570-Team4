@@ -14,71 +14,100 @@
 </head>
 <body>
 <div id="intro">
-<div id="startDemo"><p>Reserve a Room</p></div>
+  <div id="startDemo">
+    <p>Reserve a Room</p>
+  </div>
 </div>
 <div id="main" class="hidden">
-  <h1 class="ui-widget-header">Fitchburg Library Room Reservations</h1>
-  <div class="clear-fix">
-    <div style="float: left; width: 305px; padding: 5px;">
-       <div id="datepicker"></div>
-       <div class="p5 bg-lt-blue f8">*** Reservations less than a week in advance must be made directly with the library.  Please call <strong>555-1234</strong> with any questions or issues</div>
-       <div id="key">
-         <div class="beforeOpen"></div>
-         <div class="afterClose"></div>
-       </div>
-   </div>
-     <div style="float: left; min-width: 600px; width: 65%; padding: 5px;">
-       <span id="selectedDate">Please choose a date</span> <strong id="selectedSlot" style="margin-left: 20px;"></strong>
-       <div id="note" class="ui-state-highlight p5"><p>NOTE: When requesting a room less than a week in advance, you must call the library (555-1234) to make the reservation</p></div>
-       <div id="rooms" class="clear-fix hidden">
-         <div><div>&nbsp;<br /><strong>Times:</strong></div>
-           <ul id="timeList">
-          </ul>
+  <div class="bannerObject external" id="bannerDivbanner1" style="min-height: 1154px; top: 0px; left: 0px; right: 0px; position: absolute; overflow: hidden; z-index: -999999; padding: 0px;" data-image-scale="false"><img alt="Top Background" class="bannerObject" src="http://fitchburgwi.gov/ImageRepository/Document?documentID=4596" width="2200px" style="position: absolute; left: 50%; margin: 0px 0px 0px -1100px;"></div>
+  <h1 data-cprole="banner" id="banner2" class="logo empty">
+    <a style="display: block; text-align: left;" class="bannerObject" href="/822" target="_self"><img alt="Click to Home" class="bannerObject" src="http://fitchburgwi.gov/ImageRepository/Document?documentID=4609"></a>
+  </h1>
+  <div id="structuralContainer1" class="mainWrap" role="main">
+    <div class="inner">
+      <div id="structuralContainer2" class="contentWrapMain" style="min-height: 846px;">
+        <span id="selectedDate">Please choose a date</span> <strong id="selectedSlot" style="margin-left: 20px;"></strong>
+        <div id="note" class="ui-state-highlight p5">
+          <p>NOTE: When requesting a room less than a week in advance, you must call the library (555-1234) to make the reservation</p>
+        </div>
+        <div id="rooms" class="clear-fix hidden">
+          <div>
+            <div>&nbsp;<br /><strong>Times:</strong></div>
+            <ul id="timeList">
+            </ul>
           </div>
-          <div><div class="room"><strong>Conference Room</strong> <span id="cri" class="info ui-icon ui-corner-all"></span><br />capacity: 4 - 20</div>
-          <ul id="room1" class="selectable">
-          </ul>
+          <div>
+            <div class="room"><strong>Conference Room</strong> <span id="cri" class="info ui-icon ui-corner-all"></span><br />capacity: 4 - 20</div>
+            <ul id="room1" class="selectable">
+            </ul>
           </div>
-          <div><div class="room"><strong>Meeting Room</strong> <span id="mri" class="info ui-icon ui-corner-all"></span><br />capacity: 4 - 145</div>
-          <ul id="room2" class="selectable">
-          </ul>
+          <div>
+            <div class="room"><strong>Meeting Room</strong> <span id="mri" class="info ui-icon ui-corner-all"></span><br />capacity: 4 - 145</div>
+            <ul id="room2" class="selectable">
+            </ul>
           </div>
         </div>
-          <button id="continue" class="button">Continue</button>
+        <button id="continue" class="button">Continue</button>
         <div id="dialog" title="Room Details">
-          <div id="dmri" class="hidden f8"><strong>Meeting Room </strong><br />Minimum Capacity: 4   Maximum Capacity: 145<br />
-            Standard Fixtures:<ul class="nUL">
-            <li>Blu-ray Player</li>
-            <li>
-            Hitachi WXGA Projector</li>
-            <li>
-            Kitchenette w/ refrigerator, sink, and microwave.</li>
-            <li>
-            Podium</li>
-            <li>
-            Shure Cardoid Gooseneck Microphone</li>
-            <li>
-            Stackable Chairs</li>
-            <li>
-            White board</li>
-            <li>
-            Wireless Microphone System w/Lavalier Mic</li></ul>
-            Standard Equipment:
-            Assisted Listening Devices - Request at Ref. Desk
-          </div>
-          <div id="dcri" class="hidden f8"><strong>Conference Room</strong><br />Minimum Capacity: 4   Maximum Capacity: 20<br />
+          <div id="dmri" class="hidden f8">
+            <strong>Meeting Room </strong><br />Minimum Capacity: 4   Maximum Capacity: 145<br />
             Standard Fixtures:
             <ul class="nUL">
-            <li>55" LED Monitor</li>
-            <li>Conference Chairs</li>
-            <li>Large Conference Table</li>
-            <li>Side chairs</li>
-            <li>White board</li></ul>
+              <li>Blu-ray Player</li>
+              <li>
+                Hitachi WXGA Projector
+              </li>
+              <li>
+                Kitchenette w/ refrigerator, sink, and microwave.
+              </li>
+              <li>
+                Podium
+              </li>
+              <li>
+                Shure Cardoid Gooseneck Microphone
+              </li>
+              <li>
+                Stackable Chairs
+              </li>
+              <li>
+                White board
+              </li>
+              <li>
+                Wireless Microphone System w/Lavalier Mic
+              </li>
+            </ul>
+            Standard Equipment:
+            Assisted Listening Devices - Request at Ref. Desk
+          </div>
+          <div id="dcri" class="hidden f8">
+            <strong>Conference Room</strong><br />Minimum Capacity: 4   Maximum Capacity: 20<br />
+            Standard Fixtures:
+            <ul class="nUL">
+              <li>55" LED Monitor</li>
+              <li>Conference Chairs</li>
+              <li>Large Conference Table</li>
+              <li>Side chairs</li>
+              <li>White board</li>
+            </ul>
             Standard Equipment:
             Assisted Listening Devices - Request at Ref. Desk
           </div>
         </div>
-     </div>  
+      </div>
+      <div id="structuralContainer3" class="sidebar" style="min-height: 846px;">
+        <div class="clear-fix">
+          <div style="float: left; width: 305px; padding: 5px;">
+            <div id="datepicker"></div>
+            <div class="p5 bg-lt-blue f8">*** Reservations less than a week in advance must be made directly with the library.  Please call <strong>555-1234</strong> with any questions or issues</div>
+            <div id="key">
+              <div class="beforeOpen"></div>
+              <div class="afterClose"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div style="clear: both"></div>
   </div>
 </div>
 <div id="confirmation" class="hidden">
