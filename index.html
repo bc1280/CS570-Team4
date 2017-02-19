@@ -26,7 +26,8 @@
   <div id="structuralContainer1" class="mainWrap" role="main">
     <div class="inner">
       <div id="structuralContainer2" class="contentWrapMain" style="min-height: 846px;">
-        <span id="selectedDate">Please choose a date</span> <strong id="selectedSlot" style="margin-left: 20px;"></strong>
+        <h1 id="selectedDate">Please choose a date</h1>
+        <strong id="selectedSlot" style="margin-left: 20px;"></strong>
         <div id="note" class="ui-state-highlight p5">
           <p>NOTE: When requesting a room less than a week in advance, you must call the library (555-1234) to make the reservation</p>
         </div>
@@ -96,13 +97,11 @@
       </div>
       <div id="structuralContainer3" class="sidebar" style="min-height: 846px;">
         <div class="clear-fix">
-          <div style="float: left; width: 305px; padding: 5px;">
-            <div id="datepicker"></div>
-            <div class="p5 bg-lt-blue f8">*** Reservations less than a week in advance must be made directly with the library.  Please call <strong>555-1234</strong> with any questions or issues</div>
-            <div id="key">
-              <div class="beforeOpen"></div>
-              <div class="afterClose"></div>
-            </div>
+          <div id="datepicker"></div>
+          <div id="date-message" class="p5 bg-lt-blue f8">*** Reservations less than a week in advance must be made directly with the library.  Please call <strong>555-1234</strong> with any questions or issues</div>
+          <div id="key">
+            <div class="beforeOpen"></div>
+            <div class="afterClose"></div>
           </div>
         </div>
       </div>
