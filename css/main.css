@@ -1,4 +1,10 @@
 ﻿body {
+  background-color: #edeadf;
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 400;
+  color: #615b42;
+  font-size: 1em;
 }
 #main h1 {margin: 0px; padding: 5px 100px;}
 div#rooms {margin-top: 10px;}
@@ -56,7 +62,16 @@ background-color: #e6a013; /* fallback color if gradients are not supported */
     cursor: help;
 }
 
-#selectedDate{ font-size: 1.4em; font-weight: bold; }
+#selectedDate {
+  background-color: #7c9a45;
+  border: 0 none;
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.5em;
+  text-decoration: none;
+  }
 
 #intro{
     background-color: #fff;
@@ -253,4 +268,62 @@ header h1{
   background: #ece8da url("images/ui-bg_gloss-wave_100_ece8da_500x100.png") 50% 50% repeat-x;
   color: black;
   
+}
+
+/* Make it look like the Fitchburg library website */
+#main {
+  margin: 0 auto;
+  max-width: 980px;
+  min-width: 980px;
+}
+
+#structuralContainer1 {
+  background-color: #fff;
+  border: 0 none;
+  -webkit-box-shadow: 0 0 3px #e5e1d3;
+  -moz-box-shadow: 0 0 3px #e5e1d3;
+  box-shadow: 0 0 3px #e5e1d3;
+  margin-top: .5em;
+  margin-bottom: 1em;
+  padding: .5em .5em .5em .5em;
+}
+
+#structuralContainer2 {
+  border-right: 1px solid #ece9de;
+  /* padding-right: 1em; Commenting this out so the schedule fits in 980px */
+}
+
+#structuralContainer3 {
+  background-color: #01455e;
+  border: 0 none;
+  margin-bottom: 0;
+}
+
+.contentWrapMain {
+  float: left;
+  padding: 0;
+  margin-left: 32%;
+  width: 68%;
+}
+
+.sidebar {
+  float: left;
+  padding: 0 0;
+  width: 30%;
+  margin-left: -100%;
+}
+
+#datepicker {
+  width: 96%;
+  margin: 0 auto;
+  margin-top: .5em;
+  font-size: .9em;
+}
+
+#date-message {
+  width: 78%;
+  margin: 0 auto;
+  margin-top: 1em;
+  border-radius: 5px;
+  color: black;
 }
