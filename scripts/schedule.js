@@ -49,6 +49,8 @@ function InitPage(){
     changeMonth: true,
     changeYear: true,
     minDate: 0,
+    showOtherMonths: true,
+    selectOtherMonths: true,
     onSelect: function(dateText){
       SelectDate(dateText);
     },
