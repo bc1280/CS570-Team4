@@ -133,7 +133,7 @@ function GetLI(label, c, thisWeek, i){
     if(thisWeek){
       props += " style='box-shadow: unset;'";
       label = "Please call to reserve";
-      cl += "please-call"
+      cl += "please-call "
     }
     else
       cl = "";
