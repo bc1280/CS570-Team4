@@ -235,9 +235,9 @@ function SelectTime(){
 function ThisWeek(date)
 {
   var dNow = new Date();
-  if (date.getDate() < dNow.getDate()) {
-    return false;
-  }
+  //if (date.getDate() < dNow.getDate()) {
+  //  return false;
+  //}
   dNow.setDate(dNow.getDate() + 7);
   return (date < dNow);
 }
